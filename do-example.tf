@@ -9,6 +9,8 @@ resource "digitalocean_ssh_key" "default" {
   public_key = "${file("./terraform-key.pub")}"
 }
 
+/* All three are the same except for name.  The SSH key fingerprint is taken
+from the one just uploaded. */
 resource "digitalocean_droplet" "bastion" {
   image              = "ubuntu-14-04-x64"
   name               = "bastion"
@@ -36,6 +38,7 @@ resource "digitalocean_droplet" "mysql" {
   ssh_keys = ["${digitalocean_ssh_key.default.fingerprint}"]
 }
 
+# Only allow SSH from the world.
 resource "digitalocean_firewall" "bastion" {
   name = "bastion"
 
@@ -63,6 +66,7 @@ resource "digitalocean_firewall" "bastion" {
   ]
 }
 
+# Only allow HTTP/S traffic from the world and SSH from the bastion host.
 resource "digitalocean_firewall" "web" {
   name = "web"
 
@@ -100,6 +104,7 @@ resource "digitalocean_firewall" "web" {
   ]
 }
 
+# Only allow MySQL from the world and SSH from the bastion host.
 resource "digitalocean_firewall" "mysql" {
   name = "mysql"
 
