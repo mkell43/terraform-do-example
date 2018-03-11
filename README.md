@@ -34,7 +34,8 @@ account and see the results.
 ## Do You Want To Know More?
 
 The `do-example.tf` file is fairly self-explanatory.  However, I may add more
-detail here in the future.
+detail here in the future.  My past history with personal projects though says
+that I won't.
 
 ### Additional Reading
 * [Official Docs](https://www.terraform.io/)
